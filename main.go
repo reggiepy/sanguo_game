@@ -2,19 +2,18 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"sanguo_game/config"
+	"sanguo_game/wsServer"
+)
+
+const (
+	defaultHost string = "localhost"
+	defaultPort int    = 4396
 )
 
 func main() {
-	fmt.Println(config.File)
-	host, err := config.File.GetValue("server", "host")
-	if err != nil {
-		log.Fatal(err)
-	}
-	port, err := config.File.GetValue("server", "port")
-	if err != nil {
-		log.Fatal(err)
-	}
+	host := config.File.MustValue("server", "host", defaultHost)
+	port := config.File.MustInt("server", "port", defaultPort)
 	fmt.Println(host, port)
+	wsServer.RunWsWebServer()
 }
