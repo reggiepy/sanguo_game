@@ -15,5 +15,9 @@ func main() {
 	host := config.File.MustValue("server", "host", defaultHost)
 	port := config.File.MustInt("server", "port", defaultPort)
 	fmt.Println(host, port)
-	wsServer.RunWsWebServer()
+	go func() {
+		wsServer.RunWsWebServer()
+	}()
+	c := make(chan int)
+	<-c
 }
